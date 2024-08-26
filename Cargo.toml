@@ -1,5 +1,5 @@
 [workspace]
-members = ["connection"]
+members = ["connection", "service"]
 resolver = "2"
 
 
