@@ -3,4 +3,7 @@ name = "mavlink-connection"
 version = "0.1.0"
 edition = "2021"
 
+
 [dependencies]
+mavlink.workspace = true
+parking_lot.workspace = true

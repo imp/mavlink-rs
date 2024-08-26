@@ -4,3 +4,5 @@ resolver = "2"
 
 
 [workspace.dependencies]
+mavlink = { version = "0.13", features = ["minimal"] }
+parking_lot = "0.12"

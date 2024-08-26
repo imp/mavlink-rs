@@ -1,14 +1,17 @@
-pub fn add(left: u64, right: u64) -> u64 {
-    left + right
-}
+use std::io;
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+use mavlink::error;
+use mavlink::MavConnection;
+use mavlink::MavHeader;
+use mavlink::MavlinkVersion;
+use mavlink::Message;
 
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
-    }
+pub use diagnostics::Diagnostics;
+pub use sequence::Sequence;
+
+mod diagnostics;
+mod sequence;
+
+fn default<T: Default>() -> T {
+    T::default()
 }
