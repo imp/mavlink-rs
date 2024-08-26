@@ -1,0 +1,6 @@
+[workspace]
+members = ["connection"]
+resolver = "2"
+
+
+[workspace.dependencies]
