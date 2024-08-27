@@ -24,7 +24,7 @@ impl Diagnostics {
     where
         M: Message,
     {
-        Err(io::Error::other("Diagnotics recv is not implemented yet"))
+        Err(io::Error::other("Diagnostics recv is not implemented yet"))
     }
 }
 
