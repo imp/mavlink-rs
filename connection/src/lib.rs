@@ -1,6 +1,7 @@
 use std::io;
 
 use mavlink::error;
+use mavlink::peek_reader::PeekReader;
 use mavlink::MavConnection;
 use mavlink::MavHeader;
 use mavlink::MavlinkVersion;

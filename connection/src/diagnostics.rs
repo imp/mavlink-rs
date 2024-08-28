@@ -20,15 +20,31 @@ impl Diagnostics {
 }
 
 impl Diagnostics {
-    fn recv<M>(&self) -> io::Result<(MavHeader, M)>
+    fn recv_impl<M>(&self) -> Result<(MavHeader, M), error::MessageReadError>
     where
         M: Message,
     {
-        Err(io::Error::other("Diagnostics recv is not implemented yet"))
+        let buf = Vec::with_capacity(280);
+        let buf = io::Cursor::new(buf);
+        let mut buf = PeekReader::new(buf);
+        mavlink::read_versioned_msg(&mut buf, self.protocol_version)
     }
-}
 
-impl Diagnostics {
+    fn send_impl<M>(&self, header: &MavHeader, data: &M) -> Result<usize, error::MessageWriteError>
+    where
+        M: Message,
+    {
+        let header = MavHeader {
+            sequence: self.sequence.get(),
+            ..*header
+        };
+        let mut buf = Vec::with_capacity(280);
+        let count = mavlink::write_versioned_msg(&mut buf, self.protocol_version, header, data)?;
+        buf.shrink_to(count);
+        self.put(buf);
+        Ok(count)
+    }
+
     fn put(&self, buf: Vec<u8>) {
         self.messages.lock().push(buf)
     }
@@ -39,21 +55,11 @@ where
     M: Message,
 {
     fn recv(&self) -> Result<(MavHeader, M), error::MessageReadError> {
-        let (header, message) = self.recv()?;
-        Ok((header, message))
+        self.recv_impl()
     }
 
     fn send(&self, header: &MavHeader, data: &M) -> Result<usize, error::MessageWriteError> {
-        let header = MavHeader {
-            system_id: header.system_id,
-            component_id: header.component_id,
-            sequence: self.sequence.get(),
-        };
-
-        let mut buf = Vec::with_capacity(280);
-        let count = mavlink::write_versioned_msg(&mut buf, self.protocol_version, header, data)?;
-        self.put(buf);
-        Ok(count)
+        self.send_impl(header, data)
     }
 
     fn set_protocol_version(&mut self, version: MavlinkVersion) {
