@@ -1,0 +1,9 @@
+[package]
+name = "mavlink-convert"
+version = "0.1.0"
+edition = "2021"
+
+
+[dependencies]
+mavlink.workspace = true
+paste.workspace = true
