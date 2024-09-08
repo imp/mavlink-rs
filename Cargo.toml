@@ -1,8 +1,17 @@
 [workspace]
-members = ["connection", "service"]
+members = ["connection", "convert", "minimal", "service"]
 resolver = "2"
 
 
 [workspace.dependencies]
-mavlink = { version = "0.13", features = ["minimal"] }
 parking_lot = "0.12"
+paste = "1.0"
+
+mavlink-convert = { path = "./convert" }
+
+
+[workspace.dependencies.mavlink]
+version = "0.13"
+git = "https://github.com/imp/rust-mavlink"
+branch = "clippy"
+features = ["minimal", "emit-description", "format-generated-code"]

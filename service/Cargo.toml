@@ -6,3 +6,4 @@ edition = "2021"
 
 [dependencies]
 mavlink.workspace = true
+mavlink-convert.workspace = true

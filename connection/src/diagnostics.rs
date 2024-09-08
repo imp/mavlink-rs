@@ -66,7 +66,7 @@ where
         assert_eq!(version, MavlinkVersion::V2);
     }
 
-    fn get_protocol_version(&self) -> MavlinkVersion {
+    fn protocol_version(&self) -> MavlinkVersion {
         self.protocol_version
     }
 }
